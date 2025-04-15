@@ -74,12 +74,6 @@ const Navbar = () => {
                   <div>
                     <BiPhoneCall className="text-2xl h-[40px] w-[40px] rounded-md p-2 text-white bg-primary hover:bg-primary/90" />
                   </div>
-                  <div>
-                    <p>Call us on</p>
-                    <p>
-                      <a href="tel:+91123456789"> +91 123456789</a>
-                    </p>
-                  </div>
                 </div>
               </li>
               {/* Light and dark mode switcher */}
