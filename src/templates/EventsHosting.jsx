@@ -33,10 +33,10 @@ const EventHosting = ({ festivalId = null }) => {
   const [selectedState, setSelectedState] = useState("");
   const [organizerOptions, setOrganizerOptions] = useState([]);
   const [defaultOrganizer, setDefaultOrganizer] = useState("");
-  const [position, setPosition] = useState([10.3157, 123.8854]); // Cebu
+  const [position, setPosition] = useState([10.3157, 123.8854]);
 
   const { isLoaded } = useJsApiLoader({
-   googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
   useEffect(() => {
@@ -117,7 +117,7 @@ const EventHosting = ({ festivalId = null }) => {
     if (response.success) {
       message.success("Event created successfully!");
       form.resetFields();
-      setPosition([10.3157, 123.8854]); // reset to default
+      setPosition([10.3157, 123.8854]);
       form.setFieldsValue({ organizer: [defaultOrganizer] });
     } else {
       message.error(response.message || "Failed to create event");
@@ -130,7 +130,11 @@ const EventHosting = ({ festivalId = null }) => {
         <h1 className="text-2xl font-bold mb-6 text-center">Host an Event</h1>
 
         <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Form.Item name="event_name" label="Event Name" rules={[{ required: true }]}>
+          <Form.Item
+            name="event_name"
+            label="Event Name"
+            rules={[{ required: true }]}
+          >
             <Input placeholder="e.g. Battle of the Bands" />
           </Form.Item>
 
@@ -157,7 +161,9 @@ const EventHosting = ({ festivalId = null }) => {
               maxCount={1}
               accept="image/*"
             >
-              <p className="ant-upload-drag-icon"><InboxOutlined /></p>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
               <p className="text-sm">Click or drag to upload event logo</p>
             </Dragger>
           </Form.Item>
@@ -167,7 +173,11 @@ const EventHosting = ({ festivalId = null }) => {
             label="Event Schedule"
             rules={[{ required: true }]}
           >
-            <RangePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />
+            <RangePicker
+              className="w-full"
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+            />
           </Form.Item>
 
           <Form.Item name="organizer" label="Other Organizer(s)">
@@ -186,7 +196,10 @@ const EventHosting = ({ festivalId = null }) => {
                 if (res.success) {
                   setOrganizerOptions(
                     res.data
-                      .map((u) => ({ value: u.user_name, label: u.user_name }))
+                      .map((u) => ({
+                        value: u.user_name,
+                        label: u.user_name,
+                      }))
                       .filter((opt) => opt.value !== defaultOrganizer)
                   );
                 }
@@ -197,26 +210,52 @@ const EventHosting = ({ festivalId = null }) => {
           </Form.Item>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Form.Item name="country" label="Country" rules={[{ required: true }]}>
-              <Select showSearch onChange={setSelectedCountry} placeholder="Select country">
+            <Form.Item
+              name="country"
+              label="Country"
+              rules={[{ required: true }]}
+            >
+              <Select
+                showSearch
+                onChange={setSelectedCountry}
+                placeholder="Select country"
+              >
                 {countryList.map((c) => (
-                  <Select.Option key={c.isoCode} value={c.isoCode}>{c.name}</Select.Option>
+                  <Select.Option key={c.isoCode} value={c.isoCode}>
+                    {c.name}
+                  </Select.Option>
                 ))}
               </Select>
             </Form.Item>
 
-            <Form.Item name="state" label="State" rules={[{ required: true }]}>
-              <Select showSearch disabled={!selectedCountry} onChange={setSelectedState}>
+            <Form.Item
+              name="state"
+              label="State"
+              rules={[{ required: true }]}
+            >
+              <Select
+                showSearch
+                disabled={!selectedCountry}
+                onChange={setSelectedState}
+              >
                 {stateList.map((s) => (
-                  <Select.Option key={s.isoCode} value={s.isoCode}>{s.name}</Select.Option>
+                  <Select.Option key={s.isoCode} value={s.isoCode}>
+                    {s.name}
+                  </Select.Option>
                 ))}
               </Select>
             </Form.Item>
 
-            <Form.Item name="city" label="City" rules={[{ required: true }]}>
+            <Form.Item
+              name="city"
+              label="City"
+              rules={[{ required: true }]}
+            >
               <Select showSearch disabled={!selectedState}>
                 {cityList.map((c) => (
-                  <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
+                  <Select.Option key={c.name} value={c.name}>
+                    {c.name}
+                  </Select.Option>
                 ))}
               </Select>
             </Form.Item>
@@ -233,12 +272,13 @@ const EventHosting = ({ festivalId = null }) => {
           <Form.Item
             name="event_participant_limit"
             label="Participant Limit"
-            rules={[{ required: true, type: "number", message: "Please enter a valid number" }]}
-            >
-            <InputNumber className="w-full" placeholder="Max participants (e.g. 500)" />
-            </Form.Item>
+            rules={[
+              { required: true, type: "number", message: "Enter a valid number" },
+            ]}
+          >
+            <InputNumber className="w-full" placeholder="Max participants" />
+          </Form.Item>
 
-          {/* 📍 GOOGLE MAP LOCATION PICKER */}
           <Form.Item label="Event Location (Click on the map)">
             <div style={{ height: "400px", width: "100%" }}>
               {isLoaded && (
@@ -250,7 +290,9 @@ const EventHosting = ({ festivalId = null }) => {
                     setPosition([e.latLng.lat(), e.latLng.lng()])
                   }
                 >
-                  <Marker position={{ lat: position[0], lng: position[1] }} />
+                  <Marker
+                    position={{ lat: position[0], lng: position[1] }}
+                  />
                 </GoogleMap>
               )}
             </div>
@@ -283,8 +325,12 @@ const EventHosting = ({ festivalId = null }) => {
               showUploadList={{ showPreviewIcon: true }}
               accept="image/*"
             >
-              <p className="ant-upload-drag-icon"><InboxOutlined /></p>
-              <p className="text-sm">Upload up to 5 images showcasing the event</p>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="text-sm">
+                Upload up to 5 images showcasing the event
+              </p>
             </Dragger>
           </Form.Item>
 
