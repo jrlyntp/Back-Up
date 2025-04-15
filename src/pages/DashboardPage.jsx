@@ -1,73 +1,62 @@
 import React from "react";
-import Navbar from "../components/Navbar"; // Assuming you have a Navbar component
-import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
-  PlusOutlined,
+  PlusCircleOutlined,
   CalendarOutlined,
   AppstoreOutlined,
   UserOutlined,
   FlagOutlined,
 } from "@ant-design/icons";
+import "../styles/dashboard.css"; // <-- custom styles here
 
 const DashboardPage = () => {
   const navigate = useNavigate();
+  const userName = localStorage.getItem("user_name") || "User";
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Top Navigation */}
-      <Navbar />
+    <div className="dashboard-container">
+      {/* Navbar */}
+      <header className="navbar shadow-md px-6 py-4 flex justify-between items-center">
+        <div className="logo text-xl font-bold text-indigo-600">
+          🎉 Event Dashboard
+        </div>
+        <div className="user flex items-center gap-2 text-gray-700 text-sm">
+          <UserOutlined />
+          <span>{userName}</span>
+        </div>
+      </header>
 
-      {/* Main layout: sidebar + content */}
-      <div className="flex">
+      {/* Layout: Sidebar + Content */}
+      <div className="dashboard-body flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="w-64 bg-white shadow-md h-screen p-4 space-y-4">
-          <Button
-            block
-            icon={<PlusOutlined />}
-            onClick={() => navigate("/create-festival")}
-          >
-            Create Festival
-          </Button>
+        <aside className="sidebar">
+          <button onClick={() => navigate("/host-festival")}>
+            <PlusCircleOutlined />
+            <span>Create Festival</span>
+          </button>
+          <button onClick={() => navigate("/host-event")}>
+            <CalendarOutlined />
+            <span>Create Event</span>
+          </button>
+          <button onClick={() => navigate("/events")}>
+            <AppstoreOutlined />
+            <span>Events</span>
+          </button>
+          <button onClick={() => navigate("/my-events")}>
+            <UserOutlined />
+            <span>My Events</span>
+          </button>
+          <button onClick={() => navigate("/festivals")}>
+            <FlagOutlined />
+            <span>Festivals</span>
+          </button>
+        </aside>
 
-          <Button
-            block
-            icon={<CalendarOutlined />}
-            onClick={() => navigate("/create-event")}
-          >
-            Create Event
-          </Button>
-
-          <Button
-            block
-            icon={<AppstoreOutlined />}
-            onClick={() => navigate("/events")}
-          >
-            Events
-          </Button>
-
-          <Button
-            block
-            icon={<UserOutlined />}
-            onClick={() => navigate("/my-events")}
-          >
-            My Events
-          </Button>
-
-          <Button
-            block
-            icon={<FlagOutlined />}
-            onClick={() => navigate("/festivals")}
-          >
-            Festivals
-          </Button>
-        </div>
-
-        {/* Content area */}
-        <div className="flex-1 p-8">
-          <h1 className="text-2xl font-bold mb-4">Welcome to your Dashboard</h1>
-          {/* Inject routed content or dashboard widgets here */}
-        </div>
+        {/* Main Content */}
+        <main className="content-area p-8">
+          <h1 className="text-2xl font-bold mb-4">Dashboard Overview</h1>
+          <p className="text-gray-600">Select an option from the sidebar to begin.</p>
+        </main>
       </div>
     </div>
   );

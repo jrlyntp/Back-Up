@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Base layout container */
+.dashboard-container {
+    @apply flex flex-col h-screen bg-gray-100;
+  }
+  
+  /* Top navbar */
+  .navbar {
+    @apply bg-white;
+  }
+  
+  .logo {
+    @apply text-indigo-600;
+  }
+  
+  .user {
+    @apply text-gray-700;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    @apply w-64 bg-white h-full shadow-md flex flex-col gap-3 p-4;
+  }
+  
+  .sidebar button {
+    @apply flex items-center gap-2 px-3 py-2 rounded text-left text-sm hover:bg-indigo-50 font-medium text-gray-700;
+  }
+  
+  /* Content area */
+  .content-area {
+    @apply flex-1 overflow-y-auto;
+  }
+  

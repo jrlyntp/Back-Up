@@ -1,0 +1,25 @@
+/* internLogin.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  @apply h-full m-0;
+}
+
+.intern-login-container {
+  @apply flex items-center justify-center min-h-screen bg-gray-100 px-4;
+  width: 380px;
+  min-height: 400px; /* Allow expansion instead of a fixed height */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+    padding-top: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center form elements inside */
+}
+
+.intern-form-container {
+  @apply w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-8;
+}
